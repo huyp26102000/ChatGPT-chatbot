@@ -1,0 +1,7 @@
+venv/
+.idea/
+**/__pycache__/**
+source/services/helpers/temp/config
+Downloads
+Database
+OUTPUT

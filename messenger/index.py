@@ -2,8 +2,8 @@ import openai
 import requests
 from flask import Flask, request
 
-PAGE_ACCESS_TOKEN = open(".messenger_token", "r").read()
-openai.api_key = open(".gpt_api_key", "r").read()
+PAGE_ACCESS_TOKEN = "EAAcFVgEEtY0BAA1YoUsjdjZC4Btzj30xq4UiUnv3W8LOtaIoZAp9B6uOJdLb21XpD1DZAFsOQSTJUcdgmWDFZACqUYfAaQ5UFBrYJQJPWmTKWk9AMu7drZAvRtRxqij2fbcQVEMId9MtydDh8wCyOZBn5GS0cant0YCt7HMWlbKyYMfoJYtYhB4EbOOBBj1yHnTZCBksUimD1OOqSuzM4oDxhPZAwhFi3ZAwZD"
+openai.api_key = "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"
 privacyPolicyRender = open("privacy-policy.html", "r").read()
 termConditionRender = open("term-of-condition.html", "r", encoding="utf8").read()
 
@@ -33,7 +33,6 @@ def fbwebhook():
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "user", "content": message['text']},
-
             ]
         )
         request_body = {

@@ -43,11 +43,11 @@ def zalowebhook():
     getAT = requests.post(URLAccessToken, headers=header, data=body).json()
     if(getAT['error_name'] == "Authorized code expired"):
         pass
-    if(data['event_name'] == 'user_received_message'):
+    if data['event_name'] == 'user_received_message':
         print('received')
         return '200 OK HTTPS.', 200
 
-    if(data['sender']['id'] == '4356460878800442485'):
+    if(data['sender']['id'] == '4356460878800442485'):# check id of Tien Nguyen
         try:
             message = data['message']['text']
             sender_id = data['sender']['id']

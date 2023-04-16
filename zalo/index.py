@@ -8,8 +8,8 @@ from base64 import urlsafe_b64encode, urlsafe_b64decode
 
 appconfig = open("config.json", "r").read()
 appconfig = json.loads(appconfig)
-# privacyPolicyRender = open("privacy-policy.html", "r").read()
-# termConditionRender = open("term-of-condition.html", "r", encoding="utf8").read()
+openai.api_key = appconfig["gpt_api_key"]
+
 app = Flask(__name__)
 question = ['Motivation quote', 'Rút ngắn đoạn văn', 'Thông tin tuyển sinh']
 
@@ -41,11 +41,17 @@ def zalowebhook():
     }
 
     getAT = requests.post(URLAccessToken, headers=header, data=body).json()
-    if(getAT['error_name'] == "Authorized code expired"):
-        pass
-    if data['event_name'] == 'user_received_message':
-        print('received')
-        return '200 OK HTTPS.', 200
+    # print(getAT["access_token"])
+
+    with open(".message_id.txt", "a+") as f:
+        f.writelines(data["message"]["msg_id"] + "\n")
+        message_ids = f.readline()
+
+    print(message_ids)
+    for id in message_ids:
+        if data["message"]["msg_id"] == id:
+            print("Received")
+            return '200 OK HTTPS.', 200
 
     if(data['sender']['id'] == '4356460878800442485'):# check id of Tien Nguyen
         try:
@@ -57,13 +63,18 @@ def zalowebhook():
                     # response = requests.post('https://openapi.zalo.me/v2.0/oa/message', json='body').json()
                     return '200 OK HTTPS.', 200
 
-            gpt3 = gpt.zalo()
+            completion = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "user", "content": message},
+                ]
+            )
             msg = {
                 "recipient": {
                     "user_id": sender_id
                 },
                 "message": {
-                    "text": gpt3.get_msg_from_gpt(appconfig['gpt_api_key'], message),
+                    "text": completion['choices'][0]['message']['content'],
                     # "text": message,
                     "attachment": {
                         "type": "template",
@@ -102,7 +113,7 @@ def zalowebhook():
             print(f"An error occurred: {e}")
             return "Error", 500
     else:
-        print('none')
+        pass
     return '200 OK HTTPS.', 200
 
 if __name__ == '__main__':

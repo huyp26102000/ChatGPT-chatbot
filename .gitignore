@@ -5,3 +5,5 @@ source/services/helpers/temp/config
 Downloads
 Database
 OUTPUT
+zalo/config.json
+zalo/.message_id.txt

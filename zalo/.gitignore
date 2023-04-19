@@ -1,0 +1,4 @@
+venv/
+config.json
+.message_id.txt
+.default_info.txt

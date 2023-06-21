@@ -1,0 +1,37 @@
+<div [ngClass]="{'right-content': true}">
+    <div class="logo">
+        <img [ngClass]="{'img-logo': true}" class="img-logo" src="../../assets/graphic/Logo-vinendong.png" alt="LogoVIDO">
+        <p [ngClass]="{'title': true}">Manage Chatbot</p>
+    </div>
+    
+    <nav [ngClass]="{'menu-content': true}">
+        <ul [ngClass]="{'menu': true}">
+            <li [ngClass]="{'active': activeMenu === 0, 'item-menu': true}">
+                <div (click)="ToggleMenu(0)" class="menu-lv-one">
+                    Token
+                    <i class="fa-solid" [ngClass]="{'fa-chevron-right': activeMenu !== 0, 'fa-chevron-down': activeMenu === 0}"></i></div>
+                <ul>
+                    <li [ngClass]="{'sub-menu': true}"><a href="token?refresh-token-zalo">Refresh Token Zalo</a></li>
+                    <li [ngClass]="{'sub-menu': true}"><a href="token">Refresh Token Messenger</a></li>
+                    <li [ngClass]="{'sub-menu': true}"><a href="token">API GPT Key</a></li>
+                </ul>
+            </li>
+            <li [ngClass]="{'active': activeMenu === 1, 'item-menu': true}">
+                <div (click)="ToggleMenu(1)" class="menu-lv-one">
+                    Admission Department
+                    <i class="fa-solid" [ngClass]="{'fa-chevron-right': activeMenu !== 1, 'fa-chevron-down': activeMenu === 1}"></i>
+                </div>
+            </li>
+            <li [ngClass]="{'active': activeMenu === 2, 'item-menu': true}">
+                <div (click)="ToggleMenu(2)" class="menu-lv-one">
+                    Message History
+                    <i class="fa-solid" [ngClass]="{'fa-chevron-right': activeMenu !== 2, 'fa-chevron-down': activeMenu === 2}"></i>
+                </div>
+                <ul>
+                    <li [ngClass]="{'sub-menu': true}"><a href="token">Zalo Message</a></li>
+                    <li [ngClass]="{'sub-menu': true}"><a href="token">Messenger Message</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>

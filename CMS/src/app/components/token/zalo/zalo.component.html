@@ -1,0 +1,20 @@
+<main class="container">
+    <p class="title">Refresh Token Zalo</p>
+    <div class="content">
+        <form [formGroup]="yunaforms" (ngSubmit)="onSubmit()" class="content-form">
+            <div class="ip-refresh-token">
+                <input formControlName="token" class="refresh-token-zalo" type="text" name="refresh_token_zalo" id="refresh_token_zalo">
+                <p *ngIf="!yunaforms.valid && (yunaforms.dirty || yunaforms.controls.token.touched)" style="color: red;">Token is required</p>
+            </div>
+            <button class="btn-submit" type="submit">Save</button>
+        </form>
+    </div>
+</main>
+
+<div class="notification off">
+    <p class="noti-title">Would you like to modify the data? If there are discrepancies, it could have an impact on the system.</p>
+    <div class="btn">
+        <button class="btn-ok">Ok</button>
+        <button class="btn-cancel">Cancel</button>
+    </div>
+</div>

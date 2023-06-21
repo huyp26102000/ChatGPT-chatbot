@@ -1,0 +1,10 @@
+<div [ngSwitch]="title">
+    <p *ngSwitchCase="list_menu[0]">
+        <app-carouse [images]="images"></app-carouse>
+    </p>
+    <p *ngSwitchCase="false">
+    
+    </p>
+    <p *ngSwitchDefault>
+    </p>
+</div>

@@ -22,6 +22,6 @@ Follow and download:
 # Zalo
 * open terminal cd to platform need to use :```cd server-api-zalo```
 1. Create file ``config.json`` for api gpt key 
-2. Create app in https://developers.zalo.me to get messenger token
+2. Create app in https://developers.zalo.me to setup
 3. Follow Makefile 
 * requirements: ```pip install -r requirements.txt```

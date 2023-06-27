@@ -10,3 +10,7 @@ server-api-facebook/.gpt_api_key
 server-api-facebook/.messenger_token
 server-api-facebook/.env
 CMS/
+.backupfile
+server-rabbitmq/Lib/
+server-rabbitmq/Scripts/
+server-rabbitmq/pyvenv.cfg

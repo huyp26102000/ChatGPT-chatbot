@@ -1,0 +1,13 @@
+flask
+requests
+pyngrok
+openai
+cryptography
+pymongo
+langchain
+pypdf2
+python-dotenv
+streamlit
+faiss-cpu
+tiktoken
+pika

@@ -6,4 +6,7 @@ Downloads
 Database
 OUTPUT
 zalo/config.json
-zalo/.message_id.txt
+server-api-facebook/.gpt_api_key
+server-api-facebook/.messenger_token
+server-api-facebook/.env
+CMS/

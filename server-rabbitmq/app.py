@@ -1,7 +1,6 @@
 import threading
 import pika
 from flask import Flask, request
-import threading
 import time
 import json
 import requests

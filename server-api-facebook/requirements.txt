@@ -3,3 +3,4 @@ requests
 pyngrok
 openai
 pymongo
+loadenv

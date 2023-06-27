@@ -26,7 +26,7 @@ def consume_messages_zalo():
         json_data = json.loads(body)
         response = requests.post(URL_OUTPUT_ZALO, json=json_data)
         if response.status_code == 200:
-            print("Result")
+            pass
         else:
             print('Request failed with status code:', response.status_code)
         time.sleep(time_sleep)
@@ -45,7 +45,7 @@ def consume_messages_mess():
         json_data = json.loads(body)
         response = requests.post(URL_OUTPUT_MESS, json=json_data)
         if response.status_code == 200:
-            print("Result")
+            pass
         else:
             print('Request failed with status code:', response.status_code)
         time.sleep(time_sleep)

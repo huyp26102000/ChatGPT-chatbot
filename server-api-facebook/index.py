@@ -59,7 +59,6 @@ def message(sender_id, message):
         }
     }
     response = requests.post(API, json=request_body).json()
-    print(response)
     return response
 
 
@@ -116,7 +115,6 @@ def education_option(sender_id, thread, data):
     }
 
     response = requests.post(API, json=request_body).json()
-    print(response)
     return response
 
 def conversation_option(sender_id, thread, data):
@@ -153,7 +151,6 @@ def conversation_option(sender_id, thread, data):
     }
 
     response = requests.post(API, json=request_body).json()
-    print(response)
     return response
 
 def message_option_gpt(sender_id, thread, data):
@@ -180,7 +177,6 @@ def message_option_gpt(sender_id, thread, data):
     }
 
     response = requests.post(API, json=request_body).json()
-    print(response)
     return response
 
 def message_option(sender_id, thread, data):
@@ -217,7 +213,6 @@ def message_option(sender_id, thread, data):
     }
 
     response = requests.post(API, json=request_body).json()
-    print(response)
     return response
 
 
@@ -244,9 +239,8 @@ def check_entry_message(message_data):
 def message_langchain(question):
     custom_message = 'Trả lời bằng tiếng việt: ' + question
     data = {"question": custom_message}
-    completion = requests.post('http://localhost:3010/api/messenger/chat', json=data)
+    completion = requests.post('http://localhost:3011/api/messenger/chat', json=data)
     if completion.status_code == 200:
-        print('Response ok')
         return completion.json()
     else:
         completion = 'Error'
@@ -255,12 +249,10 @@ def message_langchain(question):
 def handle_message(message):
     custom_message = f'hãy trả lời câu hỏi bằng tiếng việt ngắn gọn: {message}'
     completion = message_langchain(custom_message)
-    print('langchain handling...')
     if completion == 'Error':
         return 'Server hiện đang quá tải. Vui lòng thử lại sau 10 giây! Thành thật xin lỗi đến bạn.'
     else:
         result = completion['text']
-        print(completion)
         except_word = ['sorry', 'không được đề cập tên trong đoạn văn', 'được cung cấp trong đoạn văn trên',
                        'không biết', 'không rõ', "i don't know.", 'tôi không biết',
                        'không thể trả lời được câu hỏi này với thông tin cung cấp', 'i am an ai',
@@ -269,10 +261,8 @@ def handle_message(message):
                        'thông tin được cung cấp',
                        'nội dung đã cung cấp', 'xin lỗi', 'ngữ cảnh']
         if any(keyword in result.lower() for keyword in except_word):
-            print('Except word')
             custom_message = f"Bạn hãy đóng vai đại diện cho trường cao đẳng viễn đông và trả lời bằng tiếng việt, ngắn gọn, tranh lặp từ: {message}"
             result = message_gpt(custom_message)
-            print(result)
         return result
 
 def generate_question(question):
@@ -320,17 +310,14 @@ Câu hỏi của tôi là: "{question}"""
 @app.route("/", methods=['POST'])
 def fbwebhook():
     data = request.get_json()
-    print("facebook: ", data)
     message_local = check_entry_message(data)
     if message_local is not None:
-        print("duplicate")
         return '200 OK HTTPS.'
-    else: print("new")
+    else: pass
     try:
         if message_local is None:
             # Read messages from facebook messanger.
             sender_id = data['entry'][0]['messaging'][0]['sender']['id']
-            print(sender_id)
             thread = get_recent_thread(sender_id)
             if thread is None:
                 message_option(sender_id, thread, data)
@@ -338,9 +325,7 @@ def fbwebhook():
                 message_data = data["entry"][0]["messaging"][0]
                 if "postback" in message_data:
                     user_message = data['entry'][0]['messaging'][0]['postback']
-                    print(f'user message: {user_message}')
                     payload = message_data['postback']['payload']
-                    print(payload)
                     add_action(thread, payload)
                     if payload == "payload_1":
                         message(sender_id, "Vui lòng nhập đoạn văn cần rút gọn")
@@ -364,9 +349,7 @@ def fbwebhook():
                             education_option(sender_id, thread, data)
                 else:
                     direct_message = message_data['message']['text']
-                    print(f'message {direct_message}')
                     actions = thread['actions']
-                    print(f'length actions: {len(actions)}')
                     if len(actions) <= 0:
                         current_action = None
                         message_from_gpt = handle_message(direct_message)
@@ -378,12 +361,10 @@ def fbwebhook():
                             message_from_gpt = message_gpt(f'rút gọn đoạn văn sau đây, giữ lại những ý chính: "{direct_message}"')
                             message(sender_id, message_from_gpt)
                             message_option(sender_id, thread, data)
-                            print('we here')
                         elif current_action['code'] == 'payload_5':
                             message_from_gpt = handle_message(direct_message)
                             message(sender_id, message_from_gpt)
                             message_option_gpt(sender_id, thread, data)
-                            print('no, we here')
                         else:
                             message_from_gpt = handle_message(direct_message)
                             message(sender_id, message_from_gpt)

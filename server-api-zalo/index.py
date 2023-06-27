@@ -257,10 +257,8 @@ def handle_messages(message):
                            'nội dung đã cung cấp', 'xin lỗi', 'ngữ cảnh']
             form = ['https://forms.gle/6JL1c6UoCHm2WNZi7']
             if any(keyword in result.lower() for keyword in form):
-                print('has form')
                 return result
             elif any(keyword in result.lower() for keyword in except_word):
-                print('Except word')
                 message = "Bạn hãy đóng vai đại diện cho trường cao đẳng viễn đông và trả lời bằng tiếng việt, ngắn gọn, không vượt quá 1000 ký tự, tranh lặp từ: " + message
                 result = message_gpt(message)
             return result
@@ -313,7 +311,6 @@ def send_message_with_buttons(access_token, message, message_data, thread, chang
             use_gpt = thread_actions[thread_action]['use_gpt']
             if thread_action == 'Infor Collage' and message != 'Bạn muốn biết thêm gì về trường?':
                 message = handle_messages(message)
-                print('Message before support default information: ', message)
         elif thread_action == 'Open gpt':
             opt = 3
         elif thread_action in ['Student chat', 'Parents chat', 'Close gpt']:
@@ -342,7 +339,6 @@ def send_message_with_buttons(access_token, message, message_data, thread, chang
                   '\nChúc bạn có một cuộc trò chuyện vui vẻ và tôi hy vọng tôi có thể giúp đỡ bạn. Xin cảm ơn đã ghé thăm!'
         use_gpt = False
     if use_gpt:
-        print('use gpt')
         try:
             if thread['actions'] == 'Student chat':
                 message = message_gpt(message)
@@ -353,8 +349,6 @@ def send_message_with_buttons(access_token, message, message_data, thread, chang
             print('Error from gpt: ', e)
 
     button_payload = options_button(opt)
-    print('Status gpt: ', use_gpt)
-    print('Message after check status gpt: ', message)
 
     payload = {
         "recipient": {
@@ -442,9 +436,6 @@ def zalowebhook():
             if sender_id not in admin_ids:
                 print(sender_id)
                 return '200 OK HTTPS.', 200
-
-            print('local none')
-            print('action: ', thread['actions'])
 
             if thread['actions'] == opt_action[1]:
                 message_question = 'Hãy rút gọn đoạn văn sau bằng tiếng việt, giữ lại nhưng ý chính: \n' + message
